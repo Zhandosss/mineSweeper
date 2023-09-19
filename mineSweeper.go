@@ -92,6 +92,25 @@ func (m *mineSweeper) Click(x, y int) (bool, error) {
     if !m.OpenCell(x, y) {
       return false
     }
+  } else {
+
+  }
+
+}
+
+func (m *mineSweeper) openNeighbors(x, y int) {
+  neighborBombs := 0
+  for dx := -1; dx <= 1; dx++ {
+    newX := x + dx
+    for dy := -1; dy <= 1; dy++ {
+      newY := y + dy
+      if !inBounds(newX, newY) {
+        break
+      }
+      if !m.Grid[newX][newY].IsOpen() && m.Grid[newX][newY].Flag() {
+
+      }
+    }
   }
 }
 
