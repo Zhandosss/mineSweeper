@@ -39,6 +39,7 @@ func newMineSweeper() mineSweeper {
 }
 
 func (m *mineSweeper) Print() {
+  fmt.Printf("\033c")
   fmt.Print("  ")
   for i := 0; i < height; i++ {
     fmt.Printf("%x ", i + 1)
