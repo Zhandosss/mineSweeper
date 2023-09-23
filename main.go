@@ -18,7 +18,7 @@ func main() {
     fmt.Scan(&bufY)
     switch buf {
     case "open":
-      isValid, err = grid.OpenCell(bufX - 1, bufY - 1)
+      isValid, err = grid.Click(bufX - 1, bufY - 1)
       if !isValid {
         os.Exit(1)
       }

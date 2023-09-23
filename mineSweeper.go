@@ -89,29 +89,44 @@ func (m *mineSweeper) Click(x, y int) (bool, error) {
     return true, ErrOutOfBounds
   }
   if !m.Grid[x][y].IsOpen() {
-    if !m.OpenCell(x, y) {
-      return false
-    }
+    return m.openCell(x, y), nil
   } else {
-
+    return m.openNeighbors(x, y), nil
   }
 
 }
 
-func (m *mineSweeper) openNeighbors(x, y int) {
+func (m *mineSweeper) openNeighbors(x, y int) bool{
   neighborBombs := 0
   for dx := -1; dx <= 1; dx++ {
     newX := x + dx
     for dy := -1; dy <= 1; dy++ {
       newY := y + dy
       if !inBounds(newX, newY) {
-        break
+        continue
       }
       if !m.Grid[newX][newY].IsOpen() && m.Grid[newX][newY].Flag() {
-
+        neighborBombs++
       }
     }
   }
+  if neighborBombs != m.Grid[x][y].Val() {
+    return true
+  }
+  for dx := -1; dx <= 1; dx++ {
+    newX := x + dx
+    for dy := -1; dy <= 1; dy++ {
+      newY := y + dy
+      if !inBounds(newX, newY) {
+        continue
+      }
+
+      if !m.openCell(newX, newY) {
+        return false
+      }
+    }
+  }
+  return true
 }
 
 func (m *mineSweeper) openCell(x, y int) bool {
